@@ -35,18 +35,16 @@ app.get('/search', (req, res) => {
 });
 
 app.post('/files', (req, res) => {
-    const fileName = req.body.name;
-    const fileContent = req.body.content;
-
+    const { name } = req.body;
+    const { content } = req.body;
     document.findOneAndUpdate(
-        { name: fileName },
-        { $set: { content: fileContent } },
+        { name },
+        { $set: { content } },
         { upsert: true, returnOriginal: false },
         (err, result) => {
-            res.send('Succes!!!!');
+            res.send(JSON.stringify(result));
         }
     );
 });
 
-// clientGlob.close();
 app.listen(PORT);
